@@ -16,6 +16,7 @@ typedef struct	s_map
 	int		mp_size;
 	int		e_shape;
 	int		e_density;
+	int 	strategy;	
 	int		touch;
 	int		ret;
 }				t_map;

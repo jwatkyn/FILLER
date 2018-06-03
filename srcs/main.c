@@ -33,10 +33,17 @@ int	main(void)
 	p = (t_piece *)malloc(sizeof(*p));
 	ft_init_struct(map, p);
 	ft_initialise_info(map);
-	while (1)
+	while (map->ret != -1)
 	{
 		ft_get_map(map);
 		ft_get_piece(p);
-
+		ft_get_positions(map, p);
+		ft_get_enemy_info(map);
+		ft_get_strategy(map, p);
+		ft_get_position_val(map, p);
+		ft_print_final(map, p);
 	}
+	free(map);
+	free(p);
+	return (0);
 }
