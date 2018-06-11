@@ -1,19 +1,25 @@
-NAME: players/jwatkyn.filler
+NAME = players/jwatkyn.filler
 
-SRCS: srcs/main.c \
-	srcs/parcing.c \
-	srcs/update.c
+SRCS = srcs/main.c \
+	srcs/parsing.c \
+	srcs/update.c \
+	srcs/positions.c
 
-FLAGS: -Wall -Wextra -Werror -I./includes
+FLAGS = -Wall -Wextra -Werror -I./includes
 
-OBJ: ${SRCS:.c=.o}
+OBJS = $(SRCS:.c=.o)
 
-all: $(NAME)
+all: make_lib $(NAME)
 
-$(NAME): $(OBJ)
-	make -C libft
-	gcc -o $(NAME) $(FLAGS) $(OBJ) libft/libft.a
+make_lib:
+		make -C libft
+
+$(NAME): $(OBJS)
+	gcc -o $(NAME) $(OBJS) libft/libft.a
 	@echo "Filler done"
+
+%.o: %.c
+	gcc $(FLAGS) -c $< -o $@ -I./includes
 
 clean:
 	make clean -C libft
@@ -21,6 +27,7 @@ clean:
 
 fclean: clean
 	make fclean -C libft
-	rm -rf $(NAME)
+	/bin/rm -rf $(OBJS)
+	/bin/rm -rf $(NAME)
 
 re: fclean all
