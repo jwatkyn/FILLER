@@ -10,7 +10,8 @@ typedef struct	s_map
 {
 	char	**map;
 	int		player;
-	int		*mapsize;
+	int		mapsize_x;
+	int 	mapsize_y;
 	char	e_p;
 	char	m_p;
 	int		**enemy_pos;
@@ -27,11 +28,8 @@ typedef struct	s_map
 typedef	struct	s_piece
 {
 	char	**piece;
-	int		*psize;
-	int		**real_piece;
-	int		rp_size;
-	int		**false_piece;
-	int		fp_size;
+	int		psize_x;
+	int 	psize_y;
 	int		**possible_pos;
 	int		pp_size;
 	int		*fin_pos;
