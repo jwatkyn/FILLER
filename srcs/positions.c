@@ -18,6 +18,20 @@ int		ft_get_no_pos(t_map *map, t_piece *p)
 	int	y;
 	int	i;
 	int	flag;
+
+	y = -1;
+	i = 0;
+	while (++y < map->mapsize_y - p->psize_y)
+	{
+		x = -1;
+		while (++x < map->mapsize_x - p->psize_x)
+		{
+			flag = ft_piece_map(map, p, x, y);
+			if (flag == 1)	
+				i++;
+		}
+	}
+	return (i);
 }
 
 void	ft_get_positions(t_map *map, t_piece *p)
@@ -26,30 +40,25 @@ void	ft_get_positions(t_map *map, t_piece *p)
 	int	y;
 	int	i;
 	int	flag;
+	int	count;
 
 	y = 0;
 	i = 0;
-	fprintf(stderr, "hello\n");
+	count = ft_get_no_pos(map, p);
+	fprintf(stderr, "\n%d\n", count);
 	fflush(stderr);
-	count = ft_get_no_pos(map, p)
-	while (y++ < map->mapsize_y)
+	p->possible_pos = (int**)malloc(sizeof(int[3]) * count);
+	while (y++ < map->mapsize_y - p->psize_y)
 	{
 		x = 0;
-		if (y + p->psize_y >= map->mapsize_y)
-			break ;
-		while (x++ < map->mapsize_x)
+		while (x++ < map->mapsize_x - p->psize_x)
 		{
-			if (x + p->psize_x < map->mapsize_x)
+			flag = ft_piece_map(map, p, x, y);
+			if (flag == 1)
 			{
-				flag = ft_piece_map(map, p, x, y);
-				if (flag == 1)
-				{
-					p->possible_pos[i][0] = x;
-					p->possible_pos[i++][1] = y;
-				}
+				p->possible_pos[i][0] = x;
+				p->possible_pos[i++][1] = y;
 			}
-			else
-				break ;
 		}
 	}
 	p->pp_size = i;
@@ -62,27 +71,29 @@ int		ft_piece_map(t_map *map, t_piece *p, int x, int y)
 	int	flag_1;
 	int	flag_2;
 
-	j = 0;
+	j = -1;
 	flag_1 = 0;
 	flag_2 = 0;
-	while(j++ < p->psize_y)
+	while(++j < p->psize_y)
 	{
-		i = 0;
-		while(i++ < p->psize_x)
+		i = -1;
+		while(++i < p->psize_x)
 		{
 			if (p->piece[j][i] == '*')
-				if (map->map[y + j][x + i] == (map->m_p || map->m_p - 32))
+			{
+				fprintf(stderr, "%c", map->map[y + j][x + i]);
+				fflush(stderr);
+				if (map->map[y + j][x + i] == (map->m_p || map->m_p + 32))
 					flag_1++;
-			if (p->piece[j][i] == '*')
-				if (map->map[y + j][x + i] == (map->e_p || map->e_p - 32))
+				if (map->map[y + j][x + i] == (map->e_p || map->e_p + 32))
 					flag_2++;
+			}
 			if (flag_1 > 1 || flag_2 > 0)
 				break ;
 		}
 		if (flag_1 > 1 || flag_2 > 0)
 			break ;
 	}
-
 	if (flag_1 == 1 && flag_2 == 0)
 		return (1);
 	else

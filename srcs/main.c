@@ -45,7 +45,7 @@ int	main(void)
 		ft_get_map(map);
 		ft_get_piece(p);
 		ft_get_positions(map, p);
-		write(0, "0 0\n", 4);
+		write(0, "8 2\n", 4);
 		break ;
 // //		ft_get_enemy_info(map);
 // //		ft_get_strategy(map, p);

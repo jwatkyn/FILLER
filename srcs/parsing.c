@@ -23,9 +23,9 @@ void	ft_get_map(t_map *map)
 	ft_strdel(&line);
 	get_next_line(0, &line);
 	ft_strdel(&line);
-	y = 0;
+	y = -1;
 	map->map = (char**)malloc(sizeof(char*) * map->mapsize_y);
-	while (y++ < map->mapsize_y)
+	while (++y < map->mapsize_y)
 	{
 		get_next_line(0, &line);
 		map->map[y] = (char*)malloc(sizeof(char) * map->mapsize_x);
@@ -33,6 +33,8 @@ void	ft_get_map(t_map *map)
 		ft_strdel(&line);
 	}
 	ft_get_enemypos(map);
+	fprintf(stderr, "yes\n");
+	fflush(stderr);
 	ft_get_mypos(map);
 }
 
@@ -54,7 +56,7 @@ void	ft_mapsize(t_map *map, char *line)
 				temp *= 10;
 			i++;
 		}
-		if (map->mapsize_y == 0)
+		if (map->mapsize_y == 0)	
 			map->mapsize_y = temp;
 		else if (map->mapsize_x == 0)
 			map->mapsize_x = temp;
@@ -71,14 +73,14 @@ void	ft_initialise_info(t_map *map)
 	{
 		if (ft_strstr(line, "p2"))
 		{
-			map->m_p = 'x';
-			map->e_p = 'o';
+			map->m_p = 'X';
+			map->e_p = 'O';
 			map->player = 2;
 		}
 		if (ft_strstr(line, "p1"))
 		{
-			map->m_p = 'o';
-			map->e_p = 'x';
+			map->m_p = 'O';
+			map->e_p = 'X';
 			map->player = 1;
 		}
 	}
@@ -98,18 +100,16 @@ void	ft_get_psize(t_piece *p, char *line)
 void	ft_get_piece(t_piece *p)
 {
 	char	*line;
-	int 	x;
 	int 	y;
 
 	get_next_line(0, &line);
 	ft_get_psize(p, line);
 	ft_strdel(&line);
-	y = 0;
+	y = -1;
 	p->piece = (char**)malloc(sizeof(char*) * p->psize_y);
-	while (y++ < p->psize_y)
+	while (++y < p->psize_y)
 	{
 		get_next_line(0, &line);
-		x = 0;
 		p->piece[y] = (char*)malloc(sizeof(char) * p->psize_x);
 		p->piece[y] = line;
 		ft_strdel(&line);
