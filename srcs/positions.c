@@ -21,10 +21,10 @@ int		ft_get_no_pos(t_map *map, t_piece *p)
 
 	y = -1;
 	i = 0;
-	while (++y < map->mapsize_y - p->psize_y)
+	while (++y + p->psize_y <= map->mapsize_y)
 	{
 		x = -1;
-		while (++x < map->mapsize_x - p->psize_x)
+		while (++x + p->psize_x <= map->mapsize_x)
 		{
 			flag = ft_piece_map(map, p, x, y);
 			if (flag == 1)	
@@ -42,26 +42,30 @@ void	ft_get_positions(t_map *map, t_piece *p)
 	int	flag;
 	int	count;
 
-	y = 0;
+	y = -1;
 	i = 0;
 	count = ft_get_no_pos(map, p);
 	fprintf(stderr, "\n%d\n", count);
 	fflush(stderr);
-	p->possible_pos = (int**)malloc(sizeof(int[3]) * count);
-	while (y++ < map->mapsize_y - p->psize_y)
+	if (count == 0)
+		return ;
+	p->possible_pos = (int**)malloc(sizeof(int*) * count);
+	while (++y + p->psize_y <= map->mapsize_y)
 	{
-		x = 0;
-		while (x++ < map->mapsize_x - p->psize_x)
+		x = -1;
+		while (++x + p->psize_x <= map->mapsize_x)
 		{
 			flag = ft_piece_map(map, p, x, y);
 			if (flag == 1)
 			{
+				p->possible_pos[i] = (int*)malloc(sizeof(int) * 3);
 				p->possible_pos[i][0] = x;
-				p->possible_pos[i++][1] = y;
+				p->possible_pos[i][1] = y;
+				p->possible_pos[i++][2] = 0;
 			}
 		}
 	}
-	p->pp_size = i;
+	p->pp_size = count;
 }
 
 int		ft_piece_map(t_map *map, t_piece *p, int x, int y)
@@ -79,14 +83,20 @@ int		ft_piece_map(t_map *map, t_piece *p, int x, int y)
 		i = -1;
 		while(++i < p->psize_x)
 		{
+			if (y == 7 || y == 8)
+			{
+				fprintf(stderr, "%d %d %c\n", y, x, p->piece[j][i]);
+				fflush(stderr);
+			}
 			if (p->piece[j][i] == '*')
 			{
-				fprintf(stderr, "%c", map->map[y + j][x + i]);
-				fflush(stderr);
-				if (map->map[y + j][x + i] == (map->m_p || map->m_p + 32))
-					flag_1++;
-				if (map->map[y + j][x + i] == (map->e_p || map->e_p + 32))
-					flag_2++;
+
+				if (map->map[y + j][x + i] == map->m_p || 
+					map->map[y + j][x + i] == map->m_p + 32)
+					flag_1 = flag_1 + 1;
+				if (map->map[y + j][x + i] == map->e_p || 
+					map->map[y + j][x + i] == map->e_p + 32)
+					flag_2 = flag_2 + 1;
 			}
 			if (flag_1 > 1 || flag_2 > 0)
 				break ;
@@ -95,7 +105,11 @@ int		ft_piece_map(t_map *map, t_piece *p, int x, int y)
 			break ;
 	}
 	if (flag_1 == 1 && flag_2 == 0)
+	{
+		// fprintf(stderr, "%d %d\n", y, x);
+		// fflush(stderr);
 		return (1);
+	}
 	else
 		return (0);
 }

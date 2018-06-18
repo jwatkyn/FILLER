@@ -33,8 +33,6 @@ void	ft_get_map(t_map *map)
 		ft_strdel(&line);
 	}
 	ft_get_enemypos(map);
-	fprintf(stderr, "yes\n");
-	fflush(stderr);
 	ft_get_mypos(map);
 }
 
@@ -88,13 +86,28 @@ void	ft_initialise_info(t_map *map)
 
 void	ft_get_psize(t_piece *p, char *line)
 {
-	char	*num1;
-	char	*num2;
+	int			i;
+	int			temp;
 
-	num1 = ft_strstr(line, " ");
-	num2 = ft_strstr(num1, " ");
-	p->psize_y = ft_atoi(num1);
-	p->psize_x = ft_atoi(num2);
+	i = 0;
+	p->psize_y = 0;
+	p->psize_x = 0;
+	while (line[i])
+	{
+		temp = 0;
+		while (ft_isdigit(line[i]) == 1 && line[i])
+		{
+			temp += line[i] - 48;
+			if (ft_isdigit(line[i + 1]) == 1)
+				temp *= 10;
+			i++;
+		}
+		if (p->psize_y == 0)	
+			p->psize_y = temp;
+		else if (p->psize_x == 0)
+			p->psize_x = temp;
+		i++;
+	}
 }
 
 void	ft_get_piece(t_piece *p)
