@@ -45,12 +45,14 @@ int	main(void)
 		ft_get_map(map);
 		ft_get_piece(p);
 		ft_get_positions(map, p);
-		write(0, "8 2\n", 4);
-		break ;
+// //		write(1, "8 2\n", 4);
 // //		ft_get_enemy_info(map);
 // //		ft_get_strategy(map, p);
 // //		ft_get_position_val(map, p);
-// //		ft_print_final(map, p);
+		if (p->pp_size != 0)
+			ft_print_final(p);
+		else
+			break ;
 	}
 	free(map);
 	free(p);

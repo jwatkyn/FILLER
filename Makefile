@@ -3,7 +3,8 @@ NAME = players/jwatkyn.filler
 SRCS = srcs/main.c \
 	srcs/parsing.c \
 	srcs/update.c \
-	srcs/positions.c
+	srcs/positions.c \
+	srcs/printing.c
 
 FLAGS = -Wall -Wextra -Werror -I./includes
 

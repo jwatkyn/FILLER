@@ -45,5 +45,6 @@ void			ft_get_map(t_map *map);
 void			ft_get_piece(t_piece *p);
 void			ft_get_positions(t_map *map, t_piece *p);
 int				ft_piece_map(t_map *map, t_piece *p, int x, int y);
+void			ft_print_final(t_piece *p);
 
 #endif

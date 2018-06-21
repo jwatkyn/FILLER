@@ -45,8 +45,6 @@ void	ft_get_positions(t_map *map, t_piece *p)
 	y = -1;
 	i = 0;
 	count = ft_get_no_pos(map, p);
-	fprintf(stderr, "\n%d\n", count);
-	fflush(stderr);
 	if (count == 0)
 		return ;
 	p->possible_pos = (int**)malloc(sizeof(int*) * count);
@@ -83,11 +81,6 @@ int		ft_piece_map(t_map *map, t_piece *p, int x, int y)
 		i = -1;
 		while(++i < p->psize_x)
 		{
-			if (y == 7 || y == 8)
-			{
-				fprintf(stderr, "%d %d %c\n", y, x, p->piece[j][i]);
-				fflush(stderr);
-			}
 			if (p->piece[j][i] == '*')
 			{
 
@@ -106,8 +99,6 @@ int		ft_piece_map(t_map *map, t_piece *p, int x, int y)
 	}
 	if (flag_1 == 1 && flag_2 == 0)
 	{
-		// fprintf(stderr, "%d %d\n", y, x);
-		// fflush(stderr);
 		return (1);
 	}
 	else

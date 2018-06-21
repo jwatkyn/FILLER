@@ -118,13 +118,15 @@ void	ft_get_piece(t_piece *p)
 	get_next_line(0, &line);
 	ft_get_psize(p, line);
 	ft_strdel(&line);
-	y = -1;
+	y = 0;
 	p->piece = (char**)malloc(sizeof(char*) * p->psize_y);
-	while (++y < p->psize_y)
+	while (y < p->psize_y)
 	{
 		get_next_line(0, &line);
 		p->piece[y] = (char*)malloc(sizeof(char) * p->psize_x);
-		p->piece[y] = line;
+		p->piece[y] = ft_strdup((char const *)line);
 		ft_strdel(&line);
+		y++;
 	}
+	y = -1;
 }
