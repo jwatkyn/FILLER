@@ -4,7 +4,9 @@ SRCS = srcs/main.c \
 	srcs/parsing.c \
 	srcs/update.c \
 	srcs/positions.c \
-	srcs/printing.c
+	srcs/printing.c \
+	srcs/analysis.c \
+	srcs/strategy.c
 
 FLAGS = -Wall -Wextra -Werror -I./includes
 

@@ -5,29 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jwatkyn <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/11 11:16:16 by jwatkyn           #+#    #+#             */
-/*   Updated: 2018/06/11 11:16:19 by jwatkyn          ###   ########.fr       */
+/*   Created: 2018/06/27 15:41:57 by jwatkyn           #+#    #+#             */
+/*   Updated: 2018/06/27 15:42:13 by jwatkyn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "filler"
+#include "filler.h"
 
-void	ft_get_enemy_info(t_map map, t_piece p)
+void	ft_get_enemy_info(t_map *map, t_piece *p)
 {
-//getting density and shape and whether or not players are touching
+	int i;
+
+	i = -1;
+	if (!(ft_is_touching(map)))
+		ft_strategy_1(map, p);
+	else
+		ft_strategy_2(map, p);
+	ft_strategy_3(map, p);
 }
 
-void	ft_get_density(t_map map, t_piece p)
+int		ft_is_touching2(t_map *m)
 {
-//gives density and center of density
+	int		i;
+
+	i = -1;
+	while (++i < m->mp_size)
+	{
+		if (m->my_pos[i][0] + 1 < m->size_y && m->my_pos[i][1] + 1 < m->size_x)
+			if (m->map[m->my_pos[i][0] + 1][m->my_pos[i][1] + 1] == m->e_p ||
+			m->map[m->my_pos[i][0] + 1][m->my_pos[i][1] + 1] == m->e_p + 32)
+				return (1);
+		if (m->my_pos[i][0] + 1 < m->size_y && m->my_pos[i][1] - 1 >= 0)
+			if (m->map[m->my_pos[i][0] + 1][m->my_pos[i][1] - 1] == m->e_p ||
+			m->map[m->my_pos[i][0] + 1][m->my_pos[i][1] - 1] == m->e_p + 32)
+				return (1);
+		if (m->my_pos[i][0] - 1 >= 0 && m->my_pos[i][1] + 1 < m->size_x)
+			if (m->map[m->my_pos[i][0] - 1][m->my_pos[i][1] + 1] == m->e_p ||
+			m->map[m->my_pos[i][0] - 1][m->my_pos[i][1] + 1] == m->e_p + 32)
+				return (1);
+		if (m->my_pos[i][0] - 1 >= 0 && m->my_pos[i][1] - 1 >= 0)
+			if (m->map[m->my_pos[i][0] - 1][m->my_pos[i][1] - 1] == m->e_p ||
+			m->map[m->my_pos[i][0] - 1][m->my_pos[i][1] - 1] == m->e_p + 32)
+				return (1);
+	}
+	return (0);
 }
 
-void	ft_get_shape(t_map map, t_piece p)
+int		ft_is_touching(t_map *m)
 {
-//gives shape of enemy and center of shape
+	int		i;
+
+	i = -1;
+	while (++i < m->mp_size)
+	{
+		if (m->my_pos[i][0] + 1 < m->size_y)
+			if (m->map[m->my_pos[i][0] + 1][m->my_pos[i][1]] == m->e_p ||
+				m->map[m->my_pos[i][0] + 1][m->my_pos[i][1]] == m->e_p + 32)
+				return (1);
+		if (m->my_pos[i][1] + 1 < m->size_x)
+			if (m->map[m->my_pos[i][0]][m->my_pos[i][1] + 1] == m->e_p ||
+				m->map[m->my_pos[i][0]][m->my_pos[i][1] + 1] == m->e_p + 32)
+				return (1);
+		if (m->my_pos[i][0] - 1 >= 0)
+			if (m->map[m->my_pos[i][0] - 1][m->my_pos[i][1]] == m->e_p ||
+				m->map[m->my_pos[i][0] - 1][m->my_pos[i][1]] == m->e_p + 32)
+				return (1);
+		if (m->my_pos[i][1] - 1 >= 0)
+			if (m->map[m->my_pos[i][0]][m->my_pos[i][1] - 1] == m->e_p ||
+				m->map[m->my_pos[i][0]][m->my_pos[i][1] - 1] == m->e_p + 32)
+				return (1);
+	}
+	return (ft_is_touching2(m));
 }
 
-void	ft_is_touching(t_map map, t_piece p)
+int		ft_dist(int x1, int x2, int y1, int y2)
 {
-//determines whether or not the enemy and player are connected or not
+	return ((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 }

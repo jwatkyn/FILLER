@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jwatkyn <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/11 11:16:36 by jwatkyn           #+#    #+#             */
-/*   Updated: 2018/06/11 11:16:39 by jwatkyn          ###   ########.fr       */
+/*   Created: 2018/06/27 15:52:41 by jwatkyn           #+#    #+#             */
+/*   Updated: 2018/06/27 15:53:00 by jwatkyn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 void	ft_get_map(t_map *map)
 {
 	char	*line;
-	int 	y;
+	int		y;
 
 	get_next_line(0, &line);
-	if (map->mapsize_y == 0 && map->mapsize_x == 0)
+	if (map->size_y == 0 && map->size_x == 0)
 		ft_mapsize(map, line);
 	ft_strdel(&line);
 	get_next_line(0, &line);
 	ft_strdel(&line);
 	y = -1;
-	map->map = (char**)malloc(sizeof(char*) * map->mapsize_y);
-	while (++y < map->mapsize_y)
+	map->map = (char**)malloc(sizeof(char*) * map->size_y);
+	while (++y < map->size_y)
 	{
 		get_next_line(0, &line);
-		map->map[y] = (char*)malloc(sizeof(char) * map->mapsize_x);
+		map->map[y] = (char*)malloc(sizeof(char) * map->size_x);
 		map->map[y] = ft_strdup((char const *)&line[4]);
 		ft_strdel(&line);
 	}
@@ -42,8 +42,8 @@ void	ft_mapsize(t_map *map, char *line)
 	int			temp;
 
 	i = 0;
-	map->mapsize_y = 0;
-	map->mapsize_x = 0;
+	map->size_y = 0;
+	map->size_x = 0;
 	while (line[i])
 	{
 		temp = 0;
@@ -54,10 +54,10 @@ void	ft_mapsize(t_map *map, char *line)
 				temp *= 10;
 			i++;
 		}
-		if (map->mapsize_y == 0)	
-			map->mapsize_y = temp;
-		else if (map->mapsize_x == 0)
-			map->mapsize_x = temp;
+		if (map->size_y == 0)
+			map->size_y = temp;
+		else if (map->size_x == 0)
+			map->size_x = temp;
 		i++;
 	}
 }
@@ -102,7 +102,7 @@ void	ft_get_psize(t_piece *p, char *line)
 				temp *= 10;
 			i++;
 		}
-		if (p->psize_y == 0)	
+		if (p->psize_y == 0)
 			p->psize_y = temp;
 		else if (p->psize_x == 0)
 			p->psize_x = temp;
@@ -113,7 +113,7 @@ void	ft_get_psize(t_piece *p, char *line)
 void	ft_get_piece(t_piece *p)
 {
 	char	*line;
-	int 	y;
+	int		y;
 
 	get_next_line(0, &line);
 	ft_get_psize(p, line);

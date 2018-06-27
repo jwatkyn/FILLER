@@ -1,4 +1,0 @@
-read in map
-create an array of positions that the token could be placed in
-create an array containing a heatmap of normalised values pertaining to the available token positions and the current map as is laid out. The emphaisis being on gaining the most amount of ground while stopping the other player from gaining ground.
-then win.
